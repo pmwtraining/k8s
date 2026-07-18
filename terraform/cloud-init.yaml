@@ -1,0 +1,35 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+packages:
+  - curl
+  - unzip
+
+write_files:
+  - path: /usr/local/bin/bootstrap-k3s.sh
+    permissions: "0755"
+    content: |
+      #!/bin/bash
+      set -eux
+
+      curl -sfL https://get.k3s.io | sh -
+
+      export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+
+      until kubectl get nodes >/dev/null 2>&1
+      do
+        sleep 5
+      done
+
+      curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      for i in $(seq 1 12)
+      do
+        kubectl create namespace s${i} || true
+      done
+
+      kubectl get namespaces >/root/namespaces.txt
+
+runcmd:
+  - /usr/local/bin/bootstrap-k3s.sh > /var/log/k3s-bootstrap.log 2>&1

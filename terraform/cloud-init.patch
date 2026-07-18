@@ -1,0 +1,12 @@
+Append these commands to bootstrap-k3s.sh after namespace creation:
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+
+kubectl -n ingress-nginx rollout status deployment/ingress-nginx-controller --timeout=300s
+
+for i in $(seq 1 12)
+do
+  kubectl -n s${i} apply -f /opt/demo-app.yaml
+done
+
+Copy k8s/demo-app.yaml to /opt/demo-app.yaml using a write_files entry in cloud-init.

@@ -1,0 +1,5 @@
+Update your aws_instance resource with:
+
+  key_name = var.key_pair_name
+
+This attaches an existing EC2 Key Pair to the instance.
