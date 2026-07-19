@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: training-web
+  namespace: s9
+  labels:
+    app: training-web
+spec:
+  type: ClusterIP
+
+  selector:
+    app: training-web
+
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+

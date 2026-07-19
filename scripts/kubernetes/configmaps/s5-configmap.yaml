@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: training-config
+  namespace: s5
+data:
+  CLUSTER_NAME: "pmwi"
+  STUDENT_NAMESPACE: "s5"
+  APP_NAME: "training-web"
+  ENVIRONMENT: "training"
