@@ -1,14 +1,8 @@
-#/bin/bash
-
-mkdir -p kubernetes/quotas
-
-for i in {1..12}; do
-cat > kubernetes/quotas/s${i}-quota.yaml <<EOF
 apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: training-quota
-  namespace: s${i}
+  namespace: s11
 spec:
   hard:
     pods: "20"
@@ -20,5 +14,3 @@ spec:
     configmaps: "20"
     secrets: "20"
     persistentvolumeclaims: "5"
-EOF
-done
